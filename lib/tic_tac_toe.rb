@@ -32,12 +32,32 @@ class TicTacToe
     return @board
   end
 
-  def position_taken?(board, index)
-    if board[index] == " " || board[index] == "" || board[index] == nil
+  def position_taken?(index)
+    if @board[index] == " " || @board[index] == "" || @board[index] == nil
       false
-    elsif board[index] == "X" || "O"
+    elsif @board[index] == "X" || "O"
       true
     end
+  end
+
+  def valid_move?(index)
+    if index.between?(0,8)
+      if !position_taken?(index)
+        true
+      end
+    else
+      false
+    end
+  end
+
+  def turn_count(board)
+    counter = 0
+    board.each { |pos|
+      if pos == 'X' || pos == 'O'
+        counter += 1
+      end
+    }
+    return counter
   end
 
 
