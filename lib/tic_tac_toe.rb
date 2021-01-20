@@ -68,7 +68,7 @@ class TicTacToe
     puts "Please enter 1-9:"
     input = gets
     index = input_to_index(input)
-    if valid_move?(board,index)
+    if valid_move?(index)
       move(index, current_player)
       display_board
     else
@@ -76,6 +76,56 @@ class TicTacToe
     end
   end
 
+  def won?
+    WIN_COMBINATIONS.any?{|comb|
+      if comb.all?{|pos| position_taken?(pos)}
+        arr = [];
+        comb.each{|pos| arr << @board[pos]}
+        if arr.uniq.size <=1
+          return comb
+        end
+      end
+    }
+  end
+
+  def full?
+    @board.each_index.all?{|i| position_taken?(i)}
+  end
+
+  def draw?
+    if full? && !won?
+      return true
+    end
+  end
+
+  def over?
+    if full? || won? || draw?
+      return true
+    end
+  end
+
+  def winner
+    if won?
+      board_index = won?(@board)[0]
+      if @board[board_index] == "X"
+        return "X"
+      else
+        return "O"
+      end
+    end
+  end
+
+  def play
+    while !over?
+      turn
+    end
+    if won?
+      winner = winner
+      puts "Congratulations #{winner}!"
+    elsif draw?
+      puts "Cat's Game!"
+    end
+  end
 
 
 end
