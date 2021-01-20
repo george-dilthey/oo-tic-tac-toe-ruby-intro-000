@@ -81,7 +81,7 @@ class TicTacToe
       if comb.all?{|pos| position_taken?(pos)}
         arr = [];
         comb.each{|pos| arr << @board[pos]}
-        if arr.uniq.size <=1
+        if arr.uniq.size <= 1
           return comb
         end
       end
@@ -106,7 +106,7 @@ class TicTacToe
 
   def winner
     if won?
-      board_index = won?(@board)[0]
+      board_index = won?[0]
       if @board[board_index] == "X"
         return "X"
       else
